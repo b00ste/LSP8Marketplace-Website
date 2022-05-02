@@ -1,0 +1,19 @@
+.menu {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+
+  height: 3rem;
+  background-color: lightblue;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.menu .btnText:hover {
+  cursor: pointer;
+  opacity: .6;
+}

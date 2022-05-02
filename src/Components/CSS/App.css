@@ -1,0 +1,13 @@
+.app {
+  height: 100vh;
+  width: auto;
+  background-color: yellowgreen;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app h1, .app p {
+  margin: 0;
+}
