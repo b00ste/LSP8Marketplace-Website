@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './Components/CSS/App.css'
 import Menu from './Components/Menu'
 import Mint from './Components/Pages/Mint'
-import Sell from './Components/Pages/Sell'
+import Profile from './Components/Pages/Profile'
 import Buy from './Components/Pages/Buy'
 
 const App = () => {
@@ -11,7 +11,7 @@ const App = () => {
     page: window.location.pathname,
     pageTitle: undefined,
     pageDescription: undefined,
-    accounts: undefined
+    account: "0x4125B8b4D61C8Bad6565035DDA827431077B2078"
   });
 
   useEffect(() => {
@@ -43,8 +43,8 @@ const App = () => {
           ? <Buy storage={storage} setStorage={setStorage} />
           : storage.page === '/mint'
             ? <Mint storage={storage} setStorage={setStorage} />
-            : storage.page === '/sell'
-              ? <Sell storage={storage} setStorage={setStorage} />
+            : storage.page === '/profile'
+              ? <Profile storage={storage} setStorage={setStorage} />
               : <h1>Something went wrong!<br />Please check that the URL is correct.</h1>
       }
     </div>

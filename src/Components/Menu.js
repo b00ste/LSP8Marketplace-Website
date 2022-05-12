@@ -24,15 +24,15 @@ const Menu = ({ handlePageChange, storage, setStorage }) => {
             </p>
             <p
               className='btnText'
-              onClick={() => handlePageChange({ info: 'This is the Sell page' }, 'Sell', '/sell')}
-            >
-              Sell
-            </p>
-            <p
-              className='btnText'
               onClick={() => handlePageChange({ info: 'This is the Mint page' }, 'Mint', '/mint')}
             >
               Mint
+            </p>
+            <p
+              className='btnText'
+              onClick={() => handlePageChange({ info: 'This is the Profile page' }, 'Profile', '/profile')}
+            >
+              Profile
             </p>
             <Connect storage={storage} setStorage={setStorage} />
           </>
