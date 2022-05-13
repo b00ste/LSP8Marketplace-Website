@@ -1,11 +1,10 @@
 .app {
   height: 100vh;
   width: auto;
-  background-color: yellowgreen;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .app h1, .app p {

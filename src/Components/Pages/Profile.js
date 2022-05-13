@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../CSS/Profile.css';
+import { FaTwitter, FaDiscord, FaGithub } from 'react-icons/fa';
 
 import Web3 from 'web3';
 const web3 = new Web3('https://rpc.l14.lukso.network');
@@ -23,7 +24,10 @@ const Profile = ({ storage, setStorage }) => {
     links: undefined,
     tags: undefined,
     picture: undefined,
-    background: undefined
+    background: undefined,
+    twitterLink: "https://twitter.com",
+    discordLink: "https://discord.com",
+    githubLink: "https://github.com"
   });
 
   const checkProfilePictureOrientation = () => {
@@ -86,6 +90,7 @@ const Profile = ({ storage, setStorage }) => {
         }
         
         setProfile({
+          ...profile,
           updated: true,
           name: data.LSP3Profile.LSP3Profile.name,
           description: data.LSP3Profile.LSP3Profile.description.split('\n'),
@@ -95,13 +100,25 @@ const Profile = ({ storage, setStorage }) => {
           background: backgroundImageLinks[0][1]
         });
 
+        profile.links.forEach(element => {
+          if (element.url.includes("twitter")) {
+            setProfile({ ...profile, twitterLink: element.url });
+          }
+          else if (element.url.includes("discord")) {
+            setProfile({ ...profile, discordLink: element.url });
+          }
+          else if (element.url.includes("github")) {
+            setProfile({ ...profile, githubLink: element.url });
+          }
+        });
+        
       });
       
     }
 
     fetchProfileData();
 
-  }, [storage.account])
+  }, [storage.account, profile])
   
 
   return (
@@ -112,36 +129,34 @@ const Profile = ({ storage, setStorage }) => {
             ?
             <>
               <img className='profileBackground' src={profile.background} alt="Background"/>
-              <div className='profilePicture-container'>
+              <div className='profilePicture-container' onClick={() => window.open(("https://blockscout.com/lukso/l14/address/" + storage.account), "_blank")}>
                 {checkProfilePictureOrientation()}
               </div>
-              <p className='profileName' onClick={() => window.open(("https://blockscout.com/lukso/l14/address/" + storage.account), "_blank")}>{profile.name}</p>
             </>
             :<p>Loading...</p>
         }
       </div>
-      <div className='body'>
+      <div className='body' style={{maxHeight: window.innerHeight * 0.9 - 192}} >
         {
           profile.updated
           ? <>
+              <p className='profileName'>{profile.name}</p>
               <p className='profileDescription'>
                 {
                   profile.description.map(element => <>{element}<br/></>)
                 }
               </p>
               {
-                profile.links.map((element, i ) =>
-                  <>
-                    <p className='link' onClick={() => window.open(element.url, "_blank")}>{element.title}</p>
-                  </>
-                )
-              }
-              {
                 profile.tags.map( ( element, i ) => <p>{element}</p> )
               }
             </>
           : <p>Loading...</p>
         }
+        <div className='social-links'>
+          <FaTwitter size='2em' className='link twitter' onClick={() => window.open(profile.twitterLink, "_blank")} />
+          <FaDiscord size='2em' className='link discord' onClick={() => window.open(profile.discordLink, "_blank")} />
+          <FaGithub size='2em' className='link github' onClick={() => window.open(profile.githubLink, "_blank")} />
+        </div>
       </div>
     </div>
   );
