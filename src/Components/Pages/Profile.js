@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import '../CSS/Profile.css';
 
 import Web3 from 'web3';
 const web3 = new Web3('https://rpc.l14.lukso.network');
@@ -8,6 +9,7 @@ require('isomorphic-fetch');
 const erc725schema = require('./erc725schema.json');
 const IPFS_GATEWAY = 'https://ipfs.lukso.network/ipfs/';
 const provider = new Web3.providers.HttpProvider('https://rpc.l14.lukso.network');
+const baseURL = 'https://ipfs.lukso.network/ipfs/';
 const config = {
   ipfsGateway: IPFS_GATEWAY,
 };
@@ -15,18 +17,32 @@ const config = {
 const Profile = ({ storage, setStorage }) => {
 
   const [profile, setProfile] = useState({
+    updated: false,
     name: undefined,
     description: undefined,
     links: undefined,
     tags: undefined,
-  })
+    picture: undefined,
+    background: undefined
+  });
 
-  function isValidAddress(address) {
-    const formattedAddress = web3.utils.toChecksumAddress(address);
-    return web3.utils.checkAddressChecksum(formattedAddress);
+  const checkProfilePictureOrientation = () => {
+    let img = new Image()
+    img.src = profile.picture;
+    if (img.height > img.width) {
+      return <img className='profilePicture-portrait' src={profile.picture} alt="Profile"/>;
+    }
+    else {
+      return <img className='profilePicture-landscape' src={profile.picture} alt="Profile"/>;
+    }
   }
 
   useEffect(() => {
+
+    function isValidAddress(address) {
+      const formattedAddress = web3.utils.toChecksumAddress(address);
+      return web3.utils.checkAddressChecksum(formattedAddress);
+    }
 
     async function getProfile(address) {
       if (isValidAddress(address)) {
@@ -44,12 +60,39 @@ const Profile = ({ storage, setStorage }) => {
     async function fetchProfileData() {
       getProfile(storage.account)
       .then( data => {
+        let backgroundImagesIPFS = data.LSP3Profile.LSP3Profile.backgroundImage;
+        let profileImagesIPFS = data.LSP3Profile.LSP3Profile.profileImage;
+        let backgroundImageLinks = [];
+        let profileImageLinks = [];
+
+        try {
+
+          for (let i in backgroundImagesIPFS) {
+            backgroundImageLinks.push([
+              i,
+              baseURL + backgroundImagesIPFS[i].url.substring(7),
+            ]);
+          }
+
+          for (let i in profileImagesIPFS) {
+            profileImageLinks.push([
+              i,
+              baseURL + profileImagesIPFS[i].url.substring(7),
+            ]);
+          }
+
+        } catch (error) {
+          return console.log('Could not fetch images');
+        }
         
         setProfile({
+          updated: true,
           name: data.LSP3Profile.LSP3Profile.name,
-          description: data.LSP3Profile.LSP3Profile.description,
+          description: data.LSP3Profile.LSP3Profile.description.split('\n'),
           links: data.LSP3Profile.LSP3Profile.links,
           tags: data.LSP3Profile.LSP3Profile.tags,
+          picture: profileImageLinks[0][1],
+          background: backgroundImageLinks[0][1]
         });
 
       });
@@ -63,20 +106,43 @@ const Profile = ({ storage, setStorage }) => {
 
   return (
     <div className='profile'>
-      <p>{storage.account}</p>
-      {
-        profile.name !== undefined
-        ? <>
-            <p>{profile.name}</p>
-            <p>{profile.description}</p>
-            <p>{profile.links[0].title}</p>
-            <p>{profile.links[0].url}</p>
-            <p>{profile.links[1].title}</p>
-            <p>{profile.links[1].url}</p>
-          </>
-        : <></>
-      }
-      <button onClick={() => console.log(profile)}>check address</button>
+      <div className='header'>
+        {
+          profile.updated
+            ?
+            <>
+              <img className='profileBackground' src={profile.background} alt="Background"/>
+              <div className='profilePicture-container'>
+                {checkProfilePictureOrientation()}
+              </div>
+              <p className='profileName' onClick={() => window.open(("https://blockscout.com/lukso/l14/address/" + storage.account), "_blank")}>{profile.name}</p>
+            </>
+            :<p>Loading...</p>
+        }
+      </div>
+      <div className='body'>
+        {
+          profile.updated
+          ? <>
+              <p className='profileDescription'>
+                {
+                  profile.description.map(element => <>{element}<br/></>)
+                }
+              </p>
+              {
+                profile.links.map((element, i ) =>
+                  <>
+                    <p className='link' onClick={() => window.open(element.url, "_blank")}>{element.title}</p>
+                  </>
+                )
+              }
+              {
+                profile.tags.map( ( element, i ) => <p>{element}</p> )
+              }
+            </>
+          : <p>Loading...</p>
+        }
+      </div>
     </div>
   );
 }

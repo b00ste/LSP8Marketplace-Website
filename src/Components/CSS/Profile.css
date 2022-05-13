@@ -1,0 +1,89 @@
+.profile {
+  min-height: 25rem;
+  min-width: 20rem;
+
+  border: 1px black solid;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header {
+  height: 10rem;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.body {
+  height: 15rem;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profilePicture-container {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  overflow: hidden;
+  z-index: 1;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.profilePicture-landscape {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+      -ms-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+
+.profilePicture-portrait {
+  width: 100%;
+  height: auto;
+}
+
+.profileBackground {
+  width: 100%;
+  position: absolute;
+  top: -80%;
+  left: 0;
+  z-index: 0;
+}
+
+.profileName {
+  z-index: 1;
+}
+
+.profileName:hover {
+  opacity: .5;
+  cursor: pointer;
+}
+
+.profileDescription {
+  text-align: center;
+}
+
+.link:hover {
+  opacity: .5;
+  cursor: pointer;
+}
+
+p {
+  margin: .3rem !important;
+}
