@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import '../CSS/Profile.css';
 import { FaTwitter, FaDiscord, FaGithub } from 'react-icons/fa';
 
 import Web3 from 'web3';
@@ -15,7 +14,7 @@ const config = {
   ipfsGateway: IPFS_GATEWAY,
 };
 
-const Profile = ({ storage, setStorage }) => {
+const ProfileInfo = ({ storage, setStorage }) => {
 
   const [profile, setProfile] = useState({
     updated: false,
@@ -89,6 +88,22 @@ const Profile = ({ storage, setStorage }) => {
           return console.log('Could not fetch images');
         }
         
+        setStorage({ ...storage, universalReceiver: data.LSP1UniversalReceiverDelegate });
+
+        let links = {};
+        data.LSP3Profile.LSP3Profile.links.map((element) => {
+          if (element.url.includes("twitter")) {
+            links = { ...links, twitter: element.url };
+          }
+          else if (element.url.includes("discord")) {
+            links = { ...links, discord: element.url };
+          }
+          else if (element.url.includes("github")) {
+            links = { ...links, github: element.url };
+          }
+          return 0;
+        });
+        
         setProfile({
           ...profile,
           updated: true,
@@ -97,32 +112,23 @@ const Profile = ({ storage, setStorage }) => {
           links: data.LSP3Profile.LSP3Profile.links,
           tags: data.LSP3Profile.LSP3Profile.tags,
           picture: profileImageLinks[0][1],
-          background: backgroundImageLinks[0][1]
+          background: backgroundImageLinks[0][1],
+          twitterLink: links.twitter ? links.twitter : "https://twitter.com",
+          discordLink: links.discord ? links.discord : "https://discord.com",
+          githubLink: links.github ? links.github : "https://github.com"
         });
 
-        profile.links.forEach(element => {
-          if (element.url.includes("twitter")) {
-            setProfile({ ...profile, twitterLink: element.url });
-          }
-          else if (element.url.includes("discord")) {
-            setProfile({ ...profile, discordLink: element.url });
-          }
-          else if (element.url.includes("github")) {
-            setProfile({ ...profile, githubLink: element.url });
-          }
-        });
         
       });
       
     }
 
-    fetchProfileData();
+    if (!profile.updated) { fetchProfileData(); }
 
-  }, [storage.account, profile])
-  
+  }, [storage, setStorage, profile])
 
   return (
-    <div className='profile'>
+    <>
       <div className='header'>
         {
           profile.updated
@@ -158,8 +164,8 @@ const Profile = ({ storage, setStorage }) => {
           <FaGithub size='2em' className='link github' onClick={() => window.open(profile.githubLink, "_blank")} />
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
-export default Profile;
+export default ProfileInfo;

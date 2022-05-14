@@ -1,6 +1,6 @@
 .profile {
   height: 90vh;
-  min-width: 20rem;
+  width: 20rem;
   margin: 1rem 0 0 1rem;
 
   border: 1px black solid;
@@ -100,4 +100,10 @@ p {
 .link:hover {
   opacity: .5;
   cursor: pointer;
+}
+
+.assets {
+  height: 90vh;
+  border: 1px solid black;
+  margin: 1rem;
 }

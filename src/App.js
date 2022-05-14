@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './Components/CSS/App.css'
 import Menu from './Components/Menu'
 import Mint from './Components/Pages/Mint'
-import Profile from './Components/Pages/Profile'
+import Profile from './Components/Pages/Profile/Profile'
 import Buy from './Components/Pages/Buy'
 
 const App = () => {
@@ -11,7 +11,8 @@ const App = () => {
     page: window.location.pathname,
     pageTitle: undefined,
     pageDescription: undefined,
-    account: "0x4125B8b4D61C8Bad6565035DDA827431077B2078"
+    account: "0x4125B8b4D61C8Bad6565035DDA827431077B2078",
+    universalReceiver: undefined
   });
 
   useEffect(() => {
