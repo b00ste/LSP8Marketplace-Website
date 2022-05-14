@@ -1,9 +1,10 @@
 .menu {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
+  width: 20vw;
+  height: 2rem;
 
-  height: 3rem;
+  position: fixed;
+  right: 10%;
+
   background-color: lightblue;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 5px;
@@ -11,6 +12,28 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+  align-items: center;
+}
+
+.open-container {
+  height: 2rem;
+  width: 4rem;
+
+  position: absolute;
+  top: -2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 5px 5px 0 0;
+  background-color: lightblue;
+}
+
+.menu .btnText {
+  margin: 0 !important;
+  font-size: larger;
+  font-weight: 400;
 }
 
 .menu .btnText:hover {

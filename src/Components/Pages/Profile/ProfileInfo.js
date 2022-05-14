@@ -33,10 +33,10 @@ const ProfileInfo = ({ storage, setStorage }) => {
     let img = new Image()
     img.src = profile.picture;
     if (img.height > img.width) {
-      return <img className='profilePicture-portrait' src={profile.picture} alt="Profile"/>;
+      return <img draggable="false" className='profilePicture-portrait' src={profile.picture} alt="Profile"/>;
     }
     else {
-      return <img className='profilePicture-landscape' src={profile.picture} alt="Profile"/>;
+      return <img draggable="false" className='profilePicture-landscape' src={profile.picture} alt="Profile"/>;
     }
   }
 
@@ -134,7 +134,7 @@ const ProfileInfo = ({ storage, setStorage }) => {
           profile.updated
             ?
             <>
-              <img className='profileBackground' src={profile.background} alt="Background"/>
+              <img draggable="false" className='profileBackground' src={profile.background} alt="Background"/>
               <div className='profilePicture-container' onClick={() => window.open(("https://blockscout.com/lukso/l14/address/" + storage.account), "_blank")}>
                 {checkProfilePictureOrientation()}
               </div>
@@ -142,7 +142,7 @@ const ProfileInfo = ({ storage, setStorage }) => {
             :<p>Loading...</p>
         }
       </div>
-      <div className='body' style={{maxHeight: window.innerHeight * 0.9 - 192}} >
+      <div className='body' style={{maxHeight: window.innerHeight * 0.9 - 208}} >
         {
           profile.updated
           ? <>

@@ -6,38 +6,34 @@ const Menu = ({ handlePageChange, storage, setStorage }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className='menu' style={open ? { 'width': '20rem' } : { 'width': '3rem' }}>
-      {
-        open
-          ? <>
-            <p
-              className='btnText'
-              onClick={() => setOpen(false)}
-            >
-              close
-            </p>
-            <p
-              className='btnText'
-              onClick={() => handlePageChange({ info: 'This is the Buy page' }, 'Buy', '/buy')}
-            >
-              Buy
-            </p>
-            <p
-              className='btnText'
-              onClick={() => handlePageChange({ info: 'This is the Mint page' }, 'Mint', '/mint')}
-            >
-              Mint
-            </p>
-            <p
-              className='btnText'
-              onClick={() => handlePageChange({ info: 'This is the Profile page' }, 'Profile', '/profile')}
-            >
-              Profile
-            </p>
-            <Connect storage={storage} setStorage={setStorage} />
-          </>
-          : <p className='btnText' onClick={() => setOpen(true)}>open</p>
-      }
+    <div className='menu' style={open ? { bottom: '.8rem' } : { bottom: '-2rem' }}>
+      <div className='open-container'>
+        <p
+          className='btnText open'
+          onClick={() => setOpen(!open)}
+        >
+          { open ? "close" : "open"}
+        </p>
+      </div>
+      <p
+        className='btnText'
+        onClick={() => handlePageChange({ info: 'This is the Buy page' }, 'Buy', '/buy')}
+      >
+        buy
+      </p>
+      <p
+        className='btnText'
+        onClick={() => handlePageChange({ info: 'This is the Mint page' }, 'Mint', '/mint')}
+      >
+        mint
+      </p>
+      <p
+        className='btnText'
+        onClick={() => handlePageChange({ info: 'This is the Profile page' }, 'Profile', '/profile')}
+      >
+        profile
+      </p>
+      <Connect storage={storage} setStorage={setStorage} />
     </div>
   );
 }
