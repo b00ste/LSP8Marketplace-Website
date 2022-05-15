@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Connect from './Connect'
 import './CSS/Menu.css'
 
 const Menu = ({ handlePageChange, storage, setStorage }) => {
@@ -30,7 +29,6 @@ const Menu = ({ handlePageChange, storage, setStorage }) => {
       >
         profile
       </p>
-      <Connect storage={storage} setStorage={setStorage} />
     </div>
   );
 }
