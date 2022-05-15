@@ -1,0 +1,25 @@
+.image-slider {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.asset-image {
+  width: 15rem;
+}
+
+.btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+
+  border-radius: 50%;
+  background-color: rgb(140, 140, 140);
+}
+
+.btn-container:hover {
+  opacity: .6;
+  cursor: pointer;
+}

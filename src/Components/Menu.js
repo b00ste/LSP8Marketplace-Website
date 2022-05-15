@@ -8,11 +8,8 @@ const Menu = ({ handlePageChange, storage, setStorage }) => {
   return (
     <div className='menu' style={open ? { bottom: '.8rem' } : { bottom: '-2rem' }}>
       <div className='open-container'>
-        <p
-          className='btnText open'
-          onClick={() => setOpen(!open)}
-        >
-          { open ? "close" : "open"}
+        <p className='btnText open' onClick={() => setOpen(!open)}>
+          menu
         </p>
       </div>
       <p

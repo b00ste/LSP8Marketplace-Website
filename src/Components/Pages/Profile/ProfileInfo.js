@@ -153,7 +153,7 @@ const ProfileInfo = ({ storage, setStorage }) => {
                 }
               </p>
               {
-                profile.tags.map( ( element, i ) => <p>{element}</p> )
+                profile.tags.map(element => <p>{element}</p> )
               }
             </>
           : <p>Loading...</p>

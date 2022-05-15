@@ -133,3 +133,8 @@ p {
 
   background-color: rgb(255, 255, 255);
 }
+ 
+.asset:hover {
+  opacity: .6;
+  cursor: pointer;
+}

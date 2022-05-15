@@ -12,7 +12,9 @@ const App = () => {
     pageTitle: undefined,
     pageDescription: undefined,
     account: "0x4125B8b4D61C8Bad6565035DDA827431077B2078",
-    universalReceiver: undefined
+    universalReceiver: undefined,
+    assets: [{ updated: false }],
+    selectedAsset: undefined
   });
 
   useEffect(() => {
@@ -40,11 +42,11 @@ const App = () => {
     <div className='app'>
       <Menu handlePageChange={handlePageChange} storage={storage} setStorage={setStorage} />
       {
-        storage.page === '/buy' || storage.page === '/'
+        storage.page === '/buy'
           ? <Buy storage={storage} setStorage={setStorage} />
           : storage.page === '/mint'
             ? <Mint storage={storage} setStorage={setStorage} />
-            : storage.page === '/profile'
+            : storage.page === '/profile' || storage.page === '/'
               ? <Profile storage={storage} setStorage={setStorage} />
               : <h1>Something went wrong!<br />Please check that the URL is correct.</h1>
       }

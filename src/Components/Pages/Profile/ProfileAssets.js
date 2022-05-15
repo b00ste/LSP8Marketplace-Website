@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 const Web3 = require('web3');
 const web3 = new Web3('https://rpc.l14.lukso.network');
@@ -23,7 +23,6 @@ const MetaDataKey = LSP4schema[3].key;
 const decodeMetaPhrase = LSP4schema[3].name;
 
 const ProfileAssets = ({ storage, setStorage }) => {
-  const [assets, setAssets] = useState([{ updated: false }]);
 
   useEffect(() => {
     
@@ -172,22 +171,28 @@ const ProfileAssets = ({ storage, setStorage }) => {
         });
       }
       if (ownedAssetsData.length > 2) { ownedAssetsData[0] = { updated: true }; }
-      setAssets(ownedAssetsData);
+      setStorage({ ...storage, assets: ownedAssetsData})
     }
 
-    if (!assets[0].updated) {
+    if (!storage.assets[0].updated) {
       getData();
     }
 
-  }, [assets, storage.account, storage.universalReceiver])
+  }, [storage, setStorage]);
 
   return (
     <>
       {
-        assets[0].updated
-        ? assets.map((element, i) => {
+        storage.assets[0].updated
+        ? storage.assets.map((element, i) => {
           if (i > 0) {
-            return <img draggable="false" className='asset' alt="Asset" src={IPFS_GATEWAY_URL + element.data.LSP4Metadata.images[0][0].url.substring(7)} />
+            return <img
+              draggable="false"
+              className="asset"
+              alt="Asset"
+              onClick={() => setStorage({ ...storage, selectedAsset: i })}
+              src={IPFS_GATEWAY_URL + element.data.LSP4Metadata.images[0][0].url.substring(7)}
+            />
           }
           return <></>;
         })
